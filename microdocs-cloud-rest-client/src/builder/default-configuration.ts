@@ -8,6 +8,9 @@ import {ParameterObjectMapper} from '../object-mapper/parameter-object-mapper';
 import {JsonObjectMapper} from '../object-mapper/json-object-mapper';
 import {UrlEncodingObjectMapper} from '../object-mapper/url-encoding-object-mapper';
 import { HeaderObjectMapper } from "../object-mapper/header-object-mapper";
+import { ServerList } from "../loadbalancer/server-list";
+import { LoadbalancerRule } from "../loadbalancer/rules/loadbalancer-rule";
+import { LoadbalancerFilter } from "../loadbalancer/filters/loadbalancer-filter";
 
 /**
  * Default configuration
@@ -27,5 +30,9 @@ export class DefaultConfiguration implements Configuration {
   queryObjectMapper:ParameterObjectMapper = new UrlEncodingObjectMapper();
   pathObjectMapper:ParameterObjectMapper = new UrlEncodingObjectMapper();
   headerObjectMapper:ParameterObjectMapper = new HeaderObjectMapper();
+
+  serverList: new ( serviceName: string ) => ServerList;
+  loadbalancerRule:LoadbalancerRule;
+  loadbalancerFilters:LoadbalancerFilter[];
 
 }

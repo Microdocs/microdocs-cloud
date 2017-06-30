@@ -1,7 +1,7 @@
 
 import { Observable } from "rxjs/Observable";
 import { HttpClient } from "../http/http-client";
-import { RestConfiguration } from "../builder/rest-configuration";
+import { Configuration } from "../builder/configuration";
 import { Request } from "../http/request";
 import { Response } from "../http/response";
 
@@ -28,7 +28,7 @@ export class RestClient {
     return null;
   }
 
-  getConfiguration(): RestConfiguration {
+  getConfiguration(): Configuration {
     return null;
   }
 

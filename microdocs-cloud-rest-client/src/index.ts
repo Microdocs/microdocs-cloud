@@ -48,3 +48,13 @@ export {
   UrlEncodingObjectMapper,
   JsonObjectMapper
 } from './object-mapper';
+
+export {
+  Loadbalancer,
+  Server,
+  ServerList,
+  ServerListManager,
+  LoadbalancerRule,
+  RoundRobinRule,
+  LoadbalancerFilter
+} from './loadbalancer';

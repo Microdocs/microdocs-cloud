@@ -6,7 +6,7 @@ import { Request } from '../http/request';
 import { RequestMethod } from '../http/request-method';
 import { Response } from '../http/response';
 import { RestClient } from "./rest-client";
-import { RestConfiguration } from '../builder/rest-configuration';
+import { Configuration } from '../builder/configuration';
 import { HttpClient } from "../http/http-client";
 import { Get } from "./decorators/request-methods";
 import { Client } from "./decorators/client";
@@ -70,7 +70,7 @@ class RequestMock implements HttpClient {
   public callCount: number = 0;
   public lastRequest: Request;
 
-  public request(req: Request, configuration: RestConfiguration): Observable<Response> {
+  public request(req: Request, configuration: Configuration): Observable<Response> {
     this.callCount++;
     this.lastRequest = req;
     return this.requestFunction(req);

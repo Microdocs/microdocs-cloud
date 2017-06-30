@@ -7,8 +7,7 @@ import { Response, ResponseOptions } from "../../http/response";
 import { RestClient } from "../rest-client";
 import { Get } from "./request-methods";
 import { Client } from "./client";
-import { DefaultRestConfiguration } from "../../builder/default-rest-configuration";
-import { RestConfiguration } from "../../builder/rest-configuration";
+import { DefaultConfiguration } from "../../builder/default-configuration";
 
 describe('@Client', () => {
 
@@ -49,7 +48,7 @@ class RequestMock implements HttpClient{
   headers: {
     'content-type': 'application/json'
   },
-  configuration: new DefaultRestConfiguration()
+  configuration: new DefaultConfiguration()
 })
 class TestClient extends RestClient {
 

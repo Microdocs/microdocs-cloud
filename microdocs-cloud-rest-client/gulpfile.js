@@ -11,6 +11,7 @@ var fs = require('fs');
 var Gaze = require('gaze').Gaze;
 var mocha = require('gulp-mocha');
 var vinylPaths = require('vinyl-paths');
+var rimraf = require('rimraf');
 var tsConfig = require('./tsconfig.json');
 
 var settings = {

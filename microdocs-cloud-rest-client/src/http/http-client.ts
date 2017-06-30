@@ -1,8 +1,7 @@
-
 import { Observable } from "rxjs/Observable";
 import { Request } from '../http/request';
 import { Response } from '../http/response';
-import { RestConfiguration } from '../builder/rest-configuration';
+import { Configuration } from '../builder/configuration';
 
 /**
  * This adapter class makes it possible use an own implementation of a HTTP client
@@ -19,6 +18,6 @@ export interface HttpClient {
    * @returns {Observable<Response>}
    * @memberof HttpClient
    */
-  request(request: Request, configuration:RestConfiguration): Observable<Response>;
+  request( request: Request, configuration: Configuration ): Observable<Response>;
 
 }

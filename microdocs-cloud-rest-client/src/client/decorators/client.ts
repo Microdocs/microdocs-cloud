@@ -1,14 +1,14 @@
 
-import { RestConfiguration } from "../../builder/rest-configuration";
+import { Configuration } from "../../builder/configuration";
 
 /**
  * Configure the REST Client
  * @param {String} url - base URL
  * @param {String} serviceId - Service ID
  * @param {Object} headers - default headers in a key-value pair
- * @param {RestConfiguration} configuration - configuration
+ * @param {Configuration} configuration - configuration
  */
-export function Client(args:{serviceId?: string, baseUrl?: string, headers?: any, configuration?: RestConfiguration}) {
+export function Client(args:{serviceId?: string, baseUrl?: string, headers?: any, configuration?: Configuration}) {
   return function <TFunction extends Function>(Target: TFunction): TFunction {
     if(args.serviceId){
       Target.prototype.getServiceId = function() {

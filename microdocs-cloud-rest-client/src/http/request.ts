@@ -15,6 +15,7 @@ export class Request {
   host: string;
   path: string;
   originalPath: string;
+  serviceId: string;
   body: any;
   rawBody: string;
   queryParameters: ParameterList = new ParameterList();

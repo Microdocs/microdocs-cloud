@@ -7,8 +7,8 @@ import { Parameter } from '../http/parameter';
 import { Request } from '../http/request';
 import { Response } from '../http/response';
 import { HttpConfigurationException } from '../exception/http-configuration-exception'
-import { RestBuilder } from '../builder/rest-builder';
-import { DefaultRestConfiguration } from '../builder/default-rest-configuration';
+import { RequestBuilder } from '../builder/request-builder';
+import { DefaultConfiguration } from '../builder/default-configuration';
 
 export function methodBuilder(method: number) {
   return function (url: string) {
@@ -117,8 +117,8 @@ export function methodBuilder(method: number) {
         }
 
         // make the request and store the observable for later transformation
-        let response:Observable<Response> = new RestBuilder()
-            .configuration(this.getConfiguration() || new DefaultRestConfiguration())
+        let response:Observable<Response> = new RequestBuilder()
+            .configuration(this.getConfiguration() || new DefaultConfiguration())
             .httpClient(this.getHttpClient())
             .requestInterceptor(this)
             .responseInterceptor(this)
