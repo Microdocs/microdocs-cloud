@@ -25,7 +25,7 @@ describe('@Headers', () => {
     let testClient = new TestClient(requestMock);
 
     // Act
-    testClient.getItems();
+    testClient.getItems().subscribe();
 
     // Assert
     assert.deepEqual(headers, {

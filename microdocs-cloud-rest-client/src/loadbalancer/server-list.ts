@@ -1,4 +1,4 @@
-import { Server } from "./server";
+import { Server, ServerOptions } from "./server";
 
 /**
  * This class keeps track of each server and their availability
@@ -71,5 +71,28 @@ export class ServerList {
   public filter( callbackfn: ( this: void, value: Server, index: number, array: Server[] ) => any ): ServerList {
     let filteredServers = this._servers.filter( callbackfn );
     return new ServerList( this._serviceName, filteredServers );
+  }
+
+  /**
+   * Create a ServiceList class based on a serviceList definition
+   * @param {[serviceId: string]: ServerOptions[]}  serverList
+   * @return {new (serviceName:string) => ServerList}
+   */
+  public static from( serverList: { [serviceId: string]: ServerOptions[] } ): (new ( serviceName: string ) => ServerList) {
+    let serverListClass = class extends ServerList {
+      constructor( serviceName: string ) {
+        super( serviceName );
+      }
+
+      initializeServerList(): void {
+        let serverOptions: ServerOptions[] = serverList[ this.serviceName ];
+        if ( serverOptions ) {
+          this._servers = serverOptions.map( options => new Server( options ) );
+        } else {
+          this._servers = [];
+        }
+      }
+    };
+    return serverListClass;
   }
 }

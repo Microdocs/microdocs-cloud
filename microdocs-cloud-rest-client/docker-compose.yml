@@ -1,0 +1,9 @@
+version: '3'
+services:
+  microdocs-cloud-rest-client:
+    build:
+      context: ../
+      dockerfile: ./microdocs-cloud-rest-client/Dockerfile
+    volumes:
+     - ./src:/app/@microdocs/cloud-rest-client/src:ro
+     - ./dist:/app/@microdocs/cloud-rest-client/dist

@@ -116,13 +116,11 @@ export function methodBuilder(method: number) {
           }
         }
 
-        // make the request and store the observable for later transformation
-        let response:Observable<Response> = new RequestBuilder()
-            .configuration(this.getConfiguration() || new DefaultConfiguration())
-            .httpClient(this.getHttpClient())
-            .requestInterceptor(this)
-            .responseInterceptor(this)
-            .request(request);
+        if(descriptor.retries){
+          request.retries = descriptor.retries;
+        }
+
+        let response:Observable<Response> = this.getRequestBuilder().request(request);
 
         // transform the observable in accordance to the @Produces decorator
         if (descriptor.mime) {

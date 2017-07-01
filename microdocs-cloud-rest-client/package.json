@@ -1,11 +1,11 @@
 {
-  "name": "microdocs-cloud-rest-client",
+  "name": "@microdocs/cloud-rest-client",
   "version": "1.0.0",
   "description": "Universal REST Client interface",
   "typings": "index.d.ts",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/gulp test"
   },
   "repository": {
     "type": "git",

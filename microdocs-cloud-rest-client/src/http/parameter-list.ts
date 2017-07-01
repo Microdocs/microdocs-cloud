@@ -1,4 +1,3 @@
-
 import { Parameter } from './parameter'
 import { ParameterObjectMapper } from '../object-mapper/parameter-object-mapper';
 import { UrlEncodingObjectMapper } from '../object-mapper/url-encoding-object-mapper';
@@ -13,7 +12,7 @@ import { HeaderObjectMapper } from '../object-mapper/header-object-mapper';
  */
 export class ParameterList {
 
-  private parameters:Parameter[] = [];
+  private parameters: Parameter[] = [];
 
   /**
    * Append parameter.
@@ -22,32 +21,32 @@ export class ParameterList {
    * @param {Parameter} parameter
    * @memberof ParameterList
    */
-  public append(parameter: Parameter): void {
-    let parameters = this.parameters.filter(param => param.name === parameter.name);
-    if (parameters.length > 0) {
-      let existedParam = parameters[0];
-      if (Array.isArray(existedParam.value)) {
-        if (Array.isArray(parameter.value)) {
-          parameter.value.forEach(v => {
-            existedParam.value.push(v);
-          });
+  public append( parameter: Parameter ): void {
+    let parameters = this.parameters.filter( param => param.name === parameter.name );
+    if ( parameters.length > 0 ) {
+      let existedParam = parameters[ 0 ];
+      if ( Array.isArray( existedParam.value ) ) {
+        if ( Array.isArray( parameter.value ) ) {
+          parameter.value.forEach( v => {
+            existedParam.value.push( v );
+          } );
         } else {
-          existedParam.value.push(parameter.value);
+          existedParam.value.push( parameter.value );
         }
       } else {
-        let array = [existedParam];
-        if (Array.isArray(parameter.value)) {
-          parameter.value.forEach(v => {
-            array.push(v);
-          });
+        let array = [ existedParam ];
+        if ( Array.isArray( parameter.value ) ) {
+          parameter.value.forEach( v => {
+            array.push( v );
+          } );
         } else {
-          array.push(parameter.value);
+          array.push( parameter.value );
         }
         existedParam.value = array;
       }
       existedParam.format = existedParam.format || parameter.format;
     } else {
-      this.parameters.push(parameter);
+      this.parameters.push( parameter );
     }
   }
 
@@ -58,14 +57,14 @@ export class ParameterList {
    * @returns {*} values or null if the parameter doesn't exists
    * @memberof ParameterList
    */
-  public getAll(name: string): any[] {
-    let parameter = this.getParameter(name);
-    if(parameter){
+  public getAll( name: string ): any[] {
+    let parameter = this.getParameter( name );
+    if ( parameter ) {
       let value = parameter.value;
 
-      if (!Array.isArray(value)) {
+      if ( !Array.isArray( value ) ) {
         // always return an array
-        value = [value];
+        value = [ value ];
       }
       return value;
     }
@@ -79,8 +78,8 @@ export class ParameterList {
    * @returns {Parameter} parameter or null if it doesn't exists
    * @memberof ParameterList
    */
-  public getParameter(name:string):Parameter{
-    return this.parameters.filter(param => param.name === name)[0];
+  public getParameter( name: string ): Parameter {
+    return this.parameters.filter( param => param.name === name )[ 0 ];
   }
 
   /**
@@ -91,10 +90,10 @@ export class ParameterList {
    * @returns {*} serialized value, or null if the parameter doesn't exists
    * @memberof ParameterList
    */
-  public get(name: string, mapper: ParameterObjectMapper = new UrlEncodingObjectMapper()): any {
-    let parameter = this.getParameter(name);
-    if(parameter){
-      return mapper.serializeParameter(parameter).value;
+  public get( name: string, mapper: ParameterObjectMapper = new UrlEncodingObjectMapper() ): any {
+    let parameter = this.getParameter( name );
+    if ( parameter ) {
+      return mapper.serializeParameter( parameter ).value;
     }
     return null;
   }
@@ -106,16 +105,24 @@ export class ParameterList {
    * @returns {boolean} true if exists, otherwise false
    * @memberof ParameterList
    */
-  public has(name: string): boolean {
-    return this.getParameter(name) != null;
+  public has( name: string ): boolean {
+    return this.getParameter( name ) != null;
   }
 
   /**
    * Performs the specified action for each element in an array.
    * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
    */
-  public forEach(callbackfn: (this: void, value: Parameter, index: number, array: Parameter[]) => void){
-    this.parameters.forEach(callbackfn);
+  public forEach( callbackfn: ( this: void, value: Parameter, index: number, array: Parameter[] ) => void ) {
+    this.parameters.forEach( callbackfn );
+  }
+
+  /**
+   * Calls a defined callback function on each element of an array, and returns an array that contains the results.
+   * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
+   */
+  public map( callbackfn: ( this: void, value: Parameter, index: number, array: Parameter[] ) => any ): any {
+    return this.parameters.map( callbackfn );
   }
 
 }

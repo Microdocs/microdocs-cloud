@@ -22,6 +22,8 @@ import { LoadbalancerFilter } from "../loadbalancer/filters/loadbalancer-filter"
 export class DefaultConfiguration implements Configuration {
 
   httpClient:HttpClient = null;
+  retries:number = 1;
+  timeout:number = 1000;
 
   requestInterceptors:RequestInterceptor[] = [];
   responseInterceptors:ResponseInterceptor[] = [];

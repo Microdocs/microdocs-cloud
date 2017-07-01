@@ -8,12 +8,19 @@ import { Request } from "../../http";
  */
 export class RoundRobinRule implements LoadbalancerRule {
 
-  private static counter: { [serviceName: string]: number };
+  private static counter: { [serviceName: string]: number } = {};
+
+  /**
+   * Reset counter
+   */
+  public static resetCounter():void{
+    RoundRobinRule.counter = {};
+  }
 
   findNextServer( serverList: ServerList, request: Request ): Server {
     let availableServers = serverList.availableServers;
     let allServers       = serverList.servers;
-    let count            = RoundRobinRule.counter[ serverList.serviceName ] || -1;
+    let count            = RoundRobinRule.counter[ serverList.serviceName ] !== undefined ? RoundRobinRule.counter[ serverList.serviceName ] : -1;
 
     if ( availableServers.length === 0 ) {
       // No servers available

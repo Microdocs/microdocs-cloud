@@ -14,9 +14,9 @@ export class Server {
   private _metadata: { [key: string]: any } = {};
 
   constructor( options: ServerOptions ) {
-    this._host         = options.ip;
+    this._host         = options.host;
     this._port         = options.port;
-    this._available    = options.available;
+    this._available    = options.available === undefined ? true : options.available;
     this._serviceName  = options.serviceName;
     this._instanceName = options.instanceName;
     this._metadata     = options.metadata;
@@ -49,9 +49,9 @@ export class Server {
 
 export interface ServerOptions {
 
-  ip: string;
+  host: string;
   port: number;
-  available: boolean;
+  available?: boolean;
   serviceName?: string;
   instanceName?: string;
   metadata?: { [key: string]: any };

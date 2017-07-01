@@ -1,0 +1,22 @@
+*
+# cloud-rest-client
+!microdocs-cloud-rest-client/gulpfile.js
+!microdocs-cloud-rest-client/package.json
+!microdocs-cloud-rest-client/tsconfig.json
+!microdocs-cloud-rest-client/dist/package.json
+
+# cloud-rest-client-node
+!microdocs-cloud-rest-client-node/gulpfile.js
+!microdocs-cloud-rest-client-node/package.json
+!microdocs-cloud-rest-client-node/tsconfig.json
+!microdocs-cloud-rest-client-node/dist/package.json
+
+# Example order-service
+!examples/order-service/gulpfile.js
+!examples/order-service/package.json
+!examples/order-service/tsconfig.json
+
+# Example product-service
+!examples/product-service/gulpfile.js
+!examples/product-service/package.json
+!examples/product-service/tsconfig.json

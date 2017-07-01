@@ -12,7 +12,7 @@ export class Parameter {
   private _format: string;
   private _parameterIndex: number;
 
-  constructor(values: { name?: string, value?: string, format?: string, parameterIndex?: number }) {
+  constructor(values: { name?: string, value?: any, format?: string, parameterIndex?: number }) {
     if(values){
       this._name = values.name;
       this._value = values.value;

@@ -189,6 +189,26 @@ export class RequestBuilder {
   }
 
   /**
+   * Set Retries
+   * @param number
+   * @return {RequestBuilder}
+   */
+  public retries( retries:number ): RequestBuilder {
+    this._configuration.retries = retries;
+    return this;
+  }
+
+  /**
+   * Set Request Timeout
+   * @param timeout
+   * @return {RequestBuilder}
+   */
+  public timeout( timeout:number ): RequestBuilder {
+    this._configuration.timeout = timeout;
+    return this;
+  }
+
+  /**
    * Make HTTP request
    *
    * @param {Request} request
@@ -251,28 +271,25 @@ export class RequestBuilder {
       request.rawBody = rawBody;
     }
 
-    // Find available server through service discovery and loadbalancing
-    if ( this._serviceId ) {
-      request.serviceId = this._serviceId;
+    // Resolve headers
+    if ( !request.rawHeaders ) {
+      request.rawHeaders = {};
     }
-    if ( request.serviceId ) {
-      if ( this._configuration.serverList ) {
-        // Create loadbalancer
-        let serverList          = this._configuration.serverList;
-        let loadbalancerRule    = this._configuration.loadbalancerRule;
-        let loadbalancerFilters = this._configuration.loadbalancerFilters;
-        let loadbalancer        = new Loadbalancer( request.serviceId, serverList, loadbalancerRule, loadbalancerFilters );
+    request.headers.forEach( param => {
+      let header                        = this.serializeHeaderParameter( param );
+      request.rawHeaders[ header.name ] = header.value;
+    } );
 
-        // Find server
-        let server = loadbalancer.findNextServer( request );
-        if ( !server ) {
-          throw new HttpRequestException( "No available servers found for " + request.serviceId );
-        } else {
-          console.debug( "Use server " + server.instanceName + " [" + server.host + ":" + server.port + "]" );
-        }
+    // Set retries
+    request.attempts = 0;
+    console.info(request.retries);
+    if(!request.retries){
+      request.retries = this._configuration.retries || 1;
+    }
 
-        request.host = server.host + ':' + server.port;
-      }
+    // Set Timeout
+    if(!request.timeout !== undefined){
+      request.timeout = this._configuration.timeout || 0;
     }
 
     // Run request interceptors
@@ -280,8 +297,8 @@ export class RequestBuilder {
       interceptor.requestInterceptor( request );
     } );
 
-    // Execute HTTP request
-    let response = this._configuration.httpClient.request( request, this._configuration );
+    // Make request
+    let response = this.makeRequest(request);
 
     // Run response interceptors
     this._configuration.responseInterceptors.forEach( interceptor => {
@@ -289,6 +306,61 @@ export class RequestBuilder {
     } );
 
     return response;
+  }
+
+  /**
+   * @param {Request} request
+   * @returns {Observable<Response>}
+   * @memberof RequestBuilder
+   * @throws HttpConfigurationException when the request is not build up properly
+   */
+  private makeRequest( request: Request ): Observable<Response>{
+    return Observable.create( (observer => {
+      // Find available server through service discovery and loadbalancing
+      if ( this._serviceId ) {
+        request.serviceId = this._serviceId;
+      }
+      if ( request.serviceId ) {
+        if ( this._configuration.serverList ) {
+          // Create loadbalancer
+          let serverList          = this._configuration.serverList;
+          let loadbalancerRule    = this._configuration.loadbalancerRule;
+          let loadbalancerFilters = this._configuration.loadbalancerFilters;
+          let loadbalancer        = new Loadbalancer( request.serviceId, serverList, loadbalancerRule, loadbalancerFilters );
+
+          // Find server
+          let server = loadbalancer.findNextServer( request );
+          if ( !server ) {
+            throw new HttpRequestException( "No available servers found for " + request.serviceId );
+          } else {
+            console.info( "Use server " + server.instanceName + " [" + server.host + ":" + server.port + "]" );
+          }
+
+          request.host = server.host + ':' + server.port;
+        }
+      }
+
+      // Execute HTTP request
+      request.attempts++;
+      let response = this._configuration.httpClient.request( request, this._configuration );
+
+      response.subscribe(response => {
+        console.info("response");
+        observer.next(response);
+        observer.complete();
+      }, error => {
+        if(request.attempts >= request.retries){
+          console.info("error");
+          // Done retrying
+          observer.error(error);
+          observer.complete();
+        }else{
+          console.info("error (retry)");
+          // retry
+          this.makeRequest(request).subscribe(observer);
+        }
+      });
+    }) );
   }
 
   private serializePathParameter( parameter: Parameter ): { name: string, value: string } {

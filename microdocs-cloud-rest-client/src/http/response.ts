@@ -1,6 +1,7 @@
 
 import {Request} from './request';
 import {JsonObjectMapper} from '../object-mapper/json-object-mapper';
+import { ParameterList } from "./parameter-list";
 
 /**
  * response object, contains information about a HTTP response
@@ -14,6 +15,7 @@ export class Response {
   request: Request;
   rawBody:string;
   body:any;
+  headers:ParameterList = new ParameterList();
 
   constructor(options?:ResponseOptions){
     if(options){

@@ -24,6 +24,7 @@ describe('RestClient', () => {
 
     // Act
     let result = testClient.getItems();
+    result.subscribe();
 
     // Assert
     assert.equal(requestMock.callCount, 1);

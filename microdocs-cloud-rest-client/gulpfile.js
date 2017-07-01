@@ -215,7 +215,7 @@ function _buildPackage(cb) {
     bugs: json.bugs,
     homepage: json.homepage,
     publishConfig: json.publishConfig,
-    peerDependencies: json.dependencies
+    dependencies: json.dependencies
   };
 
   var src = require('stream').Readable({ objectMode: true });

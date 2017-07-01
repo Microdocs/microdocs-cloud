@@ -18,6 +18,8 @@ import { LoadbalancerFilter } from "../loadbalancer/filters/loadbalancer-filter"
 export interface Configuration {
 
   httpClient: HttpClient;
+  retries: number;
+  timeout: number;
 
   requestInterceptors: RequestInterceptor[];
   responseInterceptors: ResponseInterceptor[];

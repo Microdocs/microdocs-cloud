@@ -6,12 +6,14 @@
     "configurations": [
         {
             "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "program": "${file}",
-            "outFiles": [
-                "${workspaceRoot}/out/**/*.js"
-            ]
+            "request": "attach",
+            "name": "order-service",
+            "port": 5858,
+            "restart": false,
+            "sourceMaps": false,
+            "outFiles": [],
+            "localRoot": "${workspaceRoot}\\examples\\order-service",
+            "remoteRoot": "/app/@microdocs/order-service"
         }
     ]
 }
