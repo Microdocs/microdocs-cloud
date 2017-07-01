@@ -1,7 +1,9 @@
 # MicroDocs Cloud REST Client
 
-MicroDocs Cloud REST Client is a lightweight universal framework for REST clients, to make **resilient MicroServices**.
+MicroDocs Cloud REST Client is a lightweight universal framework for to make REST clients. 
+The purpose behind this project is to make a **Resilient System** for NodeJS and Web applications.
 Everything is build with an abstraction layer, so you can plugin your own implementation to customize it.
+This framework is part of the [MicroDocs Cloud Framework](https://github.com/Microdocs/microdocs-cloud).
 
 ## Features
 * [Declarative Typescript REST client with decorators](#declarative-typescript-rest-client)
