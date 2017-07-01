@@ -103,7 +103,7 @@ With this mechanise a resilient system is created, where a fault is prevented to
 
 With an abstraction layer for the HTTP clients, it is possible to use a custom implementation for it.
 There are also implementation that are ready to use:
-* [NodeJS](https://github.com/Microdocs/microdocs-cloud/tree/master/microdocs-cloud-rest-client)
+* [NodeJS](https://github.com/Microdocs/microdocs-cloud/tree/master/microdocs-cloud-rest-client-node)
 
 ## Licence
 
