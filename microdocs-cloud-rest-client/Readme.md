@@ -26,7 +26,6 @@ import {HttpClient, RESTClient, Client, GET, PUT, POST, DELETE, Headers, Path, B
 import {Todo} from './models/Todo';
 import {SessionFactory} from './sessionFactory';
 
-@Injectable()
 @Client({
     serviceId: 'todo-service',
     baseUrl: '/api',

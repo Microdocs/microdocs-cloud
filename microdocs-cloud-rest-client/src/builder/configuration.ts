@@ -17,20 +17,20 @@ import { LoadbalancerFilter } from "../loadbalancer/filters/loadbalancer-filter"
  */
 export interface Configuration {
 
-  httpClient: HttpClient;
-  retries: number;
-  timeout: number;
+  httpClient?: HttpClient;
+  retries?: number;
+  timeout?: number;
 
-  requestInterceptors: RequestInterceptor[];
-  responseInterceptors: ResponseInterceptor[];
+  requestInterceptors?: RequestInterceptor[];
+  responseInterceptors?: ResponseInterceptor[];
 
-  bodyObjectMapper: ObjectMapper;
-  queryObjectMapper: ParameterObjectMapper;
-  pathObjectMapper: ParameterObjectMapper;
-  headerObjectMapper: ParameterObjectMapper;
+  bodyObjectMapper?: ObjectMapper;
+  queryObjectMapper?: ParameterObjectMapper;
+  pathObjectMapper?: ParameterObjectMapper;
+  headerObjectMapper?: ParameterObjectMapper;
 
-  serverList: new ( serviceName: string ) => ServerList;
-  loadbalancerRule: LoadbalancerRule;
-  loadbalancerFilters: LoadbalancerFilter[];
+  serverList?: new ( serviceName: string ) => ServerList;
+  loadbalancerRule?: LoadbalancerRule;
+  loadbalancerFilters?: LoadbalancerFilter[];
 
 }
