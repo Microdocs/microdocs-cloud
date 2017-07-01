@@ -9,7 +9,8 @@ This stack contains so far the following components:
 
 * [Cloud REST Client](https://github.com/Microdocs/microdocs-cloud/tree/master/microdocs-cloud-rest-client)
   * [NodeJS](https://github.com/Microdocs/microdocs-cloud/tree/master/microdocs-cloud-rest-client-node)
-  
+  * [Angular 2](https://github.com/Microdocs/microdocs-cloud/tree/master/microdocs-cloud-rest-client-angular2)
+
   
 ## Installation
 

@@ -16,9 +16,7 @@ You can provide the `NodeRestClient` in two ways.
 ```ts
 
 import {HttpClient, RESTClient, Client, GET, PUT, POST, DELETE, Headers, Path, Body, Query, Produces, MediaType} from '@microdocs/cloud-rest-client';
-import {NodeHttpClient} from '@microdocs/cloud-rest-client';
-import {Todo} from './models/Todo';
-import {SessionFactory} from './sessionFactory';
+import {NodeHttpClient} from '@microdocs/cloud-rest-client-node';
 
 @Client({
     serviceId: 'todo-service'
@@ -37,9 +35,7 @@ export class TodoClient extends RestClient {
 ```ts
 
 import {HttpClient, RESTClient, Client, GET, PUT, POST, DELETE, Headers, Path, Body, Query, Produces, MediaType} from '@microdocs/cloud-rest-client';
-import {NodeHttpClient} from '@microdocs/cloud-rest-client';
-import {Todo} from './models/Todo';
-import {SessionFactory} from './sessionFactory';
+import {NodeHttpClient} from '@microdocs/cloud-rest-client-node';
 
 @Client({
     serviceId: 'todo-service',
