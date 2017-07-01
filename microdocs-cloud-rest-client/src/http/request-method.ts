@@ -1,12 +1,18 @@
+export const RequestMethod = strEnum( [
+  'Get',
+  'Post',
+  'Put',
+  'Delete',
+  'Options',
+  'Head',
+  'Patch'
 
-export enum RequestMethod {
+] );
 
-    Get = 0,
-    Post = 1,
-    Put = 2,
-    Delete = 3,
-    Options = 4,
-    Head = 5,
-    Patch = 6
-
+/** Utility function to create a K:V from a list of strings */
+function strEnum<T extends string>( o: Array<T> ): {[K in T]: K} {
+  return o.reduce( ( res, key ) => {
+    res[ key ] = key;
+    return res;
+  }, Object.create( null ) );
 }

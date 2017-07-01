@@ -7,10 +7,8 @@ import { Parameter } from '../http/parameter';
 import { Request } from '../http/request';
 import { Response } from '../http/response';
 import { HttpConfigurationException } from '../exception/http-configuration-exception'
-import { RequestBuilder } from '../builder/request-builder';
-import { DefaultConfiguration } from '../builder/default-configuration';
 
-export function methodBuilder(method: number) {
+export function methodBuilder(method: string) {
   return function (url: string) {
     return function (target: RestClient, propertyKey: string, descriptor: any) {
       let pathParameters: Parameter[] = (<any>target)[`${propertyKey}_Path_parameters`];
@@ -21,15 +19,15 @@ export function methodBuilder(method: number) {
       descriptor.value = function (...args: any[]) {
         let request: Request = new Request();
         request.method = method;
-        request.path = url;
+        let path = url;
         if (this.getBaseUrl() != null) {
-          var baseUrl = this.getBaseUrl();
+          let baseUrl = this.getBaseUrl();
           if (baseUrl.indexOf("/") == baseUrl.length - 1 && url.indexOf("/") == 0) {
             baseUrl = baseUrl.substring(0, 1);
           }
-          url = baseUrl + url;
+          path = baseUrl + path;
         }
-        request.url = url;
+        request.url = path;
 
         // Body
         if (bodyParameters) {

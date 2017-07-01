@@ -1,6 +1,6 @@
 import * as http from 'http';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient, Request, Response, Configuration, Parameter } from '@microdocs/cloud-rest-client';
+import { HttpClient, Request, Response, Configuration, Parameter, RequestBuilder } from '@microdocs/cloud-rest-client';
 
 /**
  * HttpClient implementation with NodeJS http client
@@ -9,8 +9,8 @@ export class NodeHttpClient implements HttpClient {
 
   public request( request: Request, configuration: Configuration ): Observable<Response> {
     return Observable.create( (observer => {
-      let response = new Response( { request: request } );
-      let chunks   = [];
+      let response         = new Response( { request: request } );
+      let chunks: string = '';
 
       // Prepare request
       let headers = request.rawHeaders;
@@ -19,10 +19,9 @@ export class NodeHttpClient implements HttpClient {
       }
       let reqOptions: http.RequestOptions = {
         protocol: request.protocol + ':',
-        host: request.host,
-        hostname: request.hostname,
+        host: request.hostname,
         port: request.port,
-        method: request.method.toString(),
+        method: request.method,
         path: request.path,
         headers: request.rawHeaders,
         timeout: request.timeout
@@ -49,48 +48,61 @@ export class NodeHttpClient implements HttpClient {
         if ( response.status != 204 && contentLength > 0 ) {
           // Handle response body
           res.setEncoding( 'utf8' );
-          res.on( 'data', function ( chunk ) {
-            chunks.push( chunk );
+          res.on( 'data', function ( chunk:string ) {
+            chunks += chunk.toString();
           } );
           res.on( 'end', function () {
-            let body         = Buffer.concat( chunks ).toString();
+            let body         = chunks;
             response.rawBody = body;
 
             // Emit response to observer
-            observer.onNext( response );
-            observer.complete();
+            if(RequestBuilder.isResponseSuccessful(response.status)){
+              observer.next( response );
+              observer.complete();
+            }else{
+              observer.error( new Error("Request returned with status " + response.status) );
+              observer.complete();
+            }
           } );
           // Handle error
-          res.on('error', function(err) {
-            observer.error(err);
+          res.on( 'error', function ( err ) {
+            observer.error( err );
             observer.complete();
-          });
+          } );
         } else {
           // No response body
           // Emit response to observer
-          observer.onNext( response );
-          observer.complete();
+          if(RequestBuilder.isResponseSuccessful(response.status)){
+            observer.next( response );
+            observer.complete();
+          }else{
+            observer.error( new Error("Request returned with status " + response.status) );
+            observer.complete();
+          }
         }
       }) );
 
-      req.on('socket', function (socket) {
-        socket.setTimeout(request.timeout);
-        socket.on('timeout', function() {
+      req.on( 'socket', function ( socket ) {
+        socket.setTimeout( request.timeout );
+        socket.on( 'timeout', function () {
           req.abort();
-        });
-      });
+        } );
+      } );
 
       // Handle error
-      req.on('error', function(err) {
-        observer.error(err);
+      req.on( 'error', function ( err ) {
+        if ( err.message === 'socket hang up' ) {
+          err.message = "timeout";
+        }
+        observer.error( err );
         observer.complete();
-      });
+      } );
 
       // send body
       if ( request.rawBody ) {
         req.write( request.rawBody );
-        req.end();
       }
+      req.end();
     }) );
   }
 

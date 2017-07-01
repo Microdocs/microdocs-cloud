@@ -1,5 +1,4 @@
 import { ParameterList } from './parameter-list';
-import { RequestMethod } from './request-method';
 import { HttpConfigurationException } from '../exception/http-configuration-exception';
 
 /**
@@ -10,7 +9,7 @@ import { HttpConfigurationException } from '../exception/http-configuration-exce
  */
 export class Request {
 
-  method: RequestMethod;
+  method: string;
   protocol: string               = "http";
   _host: string;
   path: string;

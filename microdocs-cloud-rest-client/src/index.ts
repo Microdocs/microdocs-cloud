@@ -11,6 +11,7 @@ export {
   Client,
   Headers,
   Map,
+  Retry,
   OnEmit,
   Body,
   Header,

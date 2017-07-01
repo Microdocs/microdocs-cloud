@@ -4,8 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/microdocs-cloud.iml" filepath="$PROJECT_DIR$/microdocs-cloud.iml" />
       <module fileurl="file://$PROJECT_DIR$/microdocs-cloud-rest-client/microdocs-cloud-rest-client.iml" filepath="$PROJECT_DIR$/microdocs-cloud-rest-client/microdocs-cloud-rest-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microdocs-cloud-rest-client-angular2/microdocs-cloud-rest-client-angular2.iml" filepath="$PROJECT_DIR$/microdocs-cloud-rest-client-angular2/microdocs-cloud-rest-client-angular2.iml" />
       <module fileurl="file://$PROJECT_DIR$/microdocs-cloud-rest-client-node/microdocs-cloud-rest-client-node.iml" filepath="$PROJECT_DIR$/microdocs-cloud-rest-client-node/microdocs-cloud-rest-client-node.iml" />
       <module fileurl="file://$PROJECT_DIR$/microdocs-cloud-service-discovery-docker/microdocs-cloud-service-discovery-docker.iml" filepath="$PROJECT_DIR$/microdocs-cloud-service-discovery-docker/microdocs-cloud-service-discovery-docker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/examples/order-client/order-client.iml" filepath="$PROJECT_DIR$/examples/order-client/order-client.iml" />
       <module fileurl="file://$PROJECT_DIR$/examples/order-service/order-service.iml" filepath="$PROJECT_DIR$/examples/order-service/order-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/examples/product-service/product-service.iml" filepath="$PROJECT_DIR$/examples/product-service/product-service.iml" />
     </modules>

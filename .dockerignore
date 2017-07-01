@@ -11,6 +11,12 @@
 !microdocs-cloud-rest-client-node/tsconfig.json
 !microdocs-cloud-rest-client-node/dist/package.json
 
+# cloud-rest-client-angular2
+!microdocs-cloud-rest-client-angular2/gulpfile.js
+!microdocs-cloud-rest-client-angular2/package.json
+!microdocs-cloud-rest-client-angular2/tsconfig.json
+!microdocs-cloud-rest-client-angular2/dist/package.json
+
 # Example order-service
 !examples/order-service/gulpfile.js
 !examples/order-service/package.json
@@ -20,3 +26,8 @@
 !examples/product-service/gulpfile.js
 !examples/product-service/package.json
 !examples/product-service/tsconfig.json
+
+# Example order-service
+!examples/order-client/.angular-cli.json
+!examples/order-client/package.json
+!examples/order-client/tsconfig.json

@@ -193,7 +193,7 @@ export class RequestBuilder {
    * @param number
    * @return {RequestBuilder}
    */
-  public retries( retries:number ): RequestBuilder {
+  public retries( retries: number ): RequestBuilder {
     this._configuration.retries = retries;
     return this;
   }
@@ -203,7 +203,7 @@ export class RequestBuilder {
    * @param timeout
    * @return {RequestBuilder}
    */
-  public timeout( timeout:number ): RequestBuilder {
+  public timeout( timeout: number ): RequestBuilder {
     this._configuration.timeout = timeout;
     return this;
   }
@@ -282,13 +282,12 @@ export class RequestBuilder {
 
     // Set retries
     request.attempts = 0;
-    console.info(request.retries);
-    if(!request.retries){
+    if ( request.retries === undefined ) {
       request.retries = this._configuration.retries || 1;
     }
 
     // Set Timeout
-    if(!request.timeout !== undefined){
+    if ( request.timeout === undefined ) {
       request.timeout = this._configuration.timeout || 0;
     }
 
@@ -298,7 +297,7 @@ export class RequestBuilder {
     } );
 
     // Make request
-    let response = this.makeRequest(request);
+    let response = this.makeRequest( request );
 
     // Run response interceptors
     this._configuration.responseInterceptors.forEach( interceptor => {
@@ -314,7 +313,7 @@ export class RequestBuilder {
    * @memberof RequestBuilder
    * @throws HttpConfigurationException when the request is not build up properly
    */
-  private makeRequest( request: Request ): Observable<Response>{
+  private makeRequest( request: Request ): Observable<Response> {
     return Observable.create( (observer => {
       // Find available server through service discovery and loadbalancing
       if ( this._serviceId ) {
@@ -344,22 +343,19 @@ export class RequestBuilder {
       request.attempts++;
       let response = this._configuration.httpClient.request( request, this._configuration );
 
-      response.subscribe(response => {
-        console.info("response");
-        observer.next(response);
+      response.subscribe( response => {
+        observer.next( response );
         observer.complete();
       }, error => {
-        if(request.attempts >= request.retries){
-          console.info("error");
+        if ( request.attempts >= request.retries ) {
           // Done retrying
-          observer.error(error);
+          observer.error( error );
           observer.complete();
-        }else{
-          console.info("error (retry)");
+        } else {
           // retry
-          this.makeRequest(request).subscribe(observer);
+          this.makeRequest( request ).subscribe( observer );
         }
-      });
+      } );
     }) );
   }
 
@@ -389,4 +385,12 @@ export class RequestBuilder {
     throw new HttpRequestException( "Unable to serialize request body" );
   }
 
+  /**
+   * Check if response status is successful
+   * @param status
+   * @return {boolean}
+   */
+  public static isResponseSuccessful( status: number ): boolean {
+    return status >= 200 && status < 400;
+  }
 }
