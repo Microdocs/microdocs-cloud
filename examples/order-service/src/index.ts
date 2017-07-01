@@ -5,12 +5,20 @@ import * as http from 'http';
 var router = express.Router();
 var debug  = require( 'debug' )( 'order-service:server' );
 
-
 // Create server
 var app = express();
 
 // Create client
 var productClient  = new ProductClient( );
+
+
+
+
+
+
+
+
+
 
 // Route
 router.get( "/api/v1/orders/:id", ( req: express.Request, res: express.Response, next ) => {
@@ -20,6 +28,7 @@ router.get( "/api/v1/orders/:id", ( req: express.Request, res: express.Response,
       id: req.param[ 'id' ],
       products: products
     };
+    res.set("Access-Control-Allow-Origin", "*");
     res.json( order );
   }, ( error ) => {
     console.error( error );
@@ -33,7 +42,7 @@ console.info( "started" );
 // catch 404 and forward to error handler
 app.use( function ( req: express.Request, res: express.Response, next ) {
   var err    = new Error( 'Not Found' );
-  res.status = 404;
+  err.status = 404;
   next( err );
 } );
 
@@ -46,7 +55,7 @@ app.use( function ( err, req: express.Request, res: express.Response, next ) {
   // render the error page
   res.status = err.status || 500;
   console.error( err );
-  res.json( {
+  res.json( res.status, {
     status: "failed",
     message: err.message
   } );

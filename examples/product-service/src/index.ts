@@ -26,7 +26,7 @@ console.info( "started" );
 // catch 404 and forward to error handler
 app.use( function ( req: express.Request, res: express.Response, next ) {
   var err    = new Error( 'Not Found' );
-  res.status = 404;
+  err.status = 404;
   next( err );
 } );
 
@@ -39,7 +39,7 @@ app.use( function ( err, req: express.Request, res: express.Response, next ) {
   // render the error page
   res.status = err.status || 500;
   console.error( err );
-  res.json( {
+  res.json( res.status, {
     status: "failed",
     message: err.message
   } );

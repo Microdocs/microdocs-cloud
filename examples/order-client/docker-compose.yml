@@ -1,0 +1,14 @@
+version: '3'
+services:
+  examples-order-client:
+    build:
+      context: ../../
+      dockerfile: ./examples/order-client/Dockerfile
+    volumes:
+     - ../../microdocs-cloud-rest-client/dist:/app/@microdocs/order-client/node_modules/@microdocs/cloud-rest-client:ro
+     - ../../microdocs-cloud-rest-client-angular2/dist:/app/@microdocs/order-client/node_modules/@microdocs/cloud-rest-client-angular2:ro
+     - ./src:/app/@microdocs/order-client/src:ro
+     - ./dist:/app/@microdocs/order-client/dist
+    ports:
+     - 4200:4200
+

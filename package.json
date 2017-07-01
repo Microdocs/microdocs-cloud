@@ -1,0 +1,28 @@
+{
+  "name": "@microdocs/cloud",
+  "version": "1.0.0",
+  "description": "Microservice Cloud-Native Framework",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/microdocs/microdocs-cloud.git"
+  },
+  "keywords": [
+    "microdocs",
+    "microservices",
+    "cloud",
+    "native",
+    "framework",
+    "feign",
+    "http",
+    "client"
+  ],
+  "author": "Steven Hermans <s.hermans@maxxton.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/microdocs/microdocs-cloud/issues"
+  },
+  "homepage": "https://github.com/microdocs/microdocs-cloud#readme",
+  "dependencies": {
+    "@microdocs/cloud-rest-client": "1.0.0"
+  }
+}
