@@ -1,0 +1,6 @@
+application:
+  name: auditlog
+  profiles: development
+
+logger:
+  level: verbose

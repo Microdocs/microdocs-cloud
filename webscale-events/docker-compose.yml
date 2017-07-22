@@ -1,0 +1,9 @@
+version: '3'
+services:
+  webscale-events:
+    build:
+      context: ../
+      dockerfile: ./webscale-events/Dockerfile
+    volumes:
+     - ./src:/app/@webscale/events/src:ro
+     - ./dist:/app/@webscale/events/dist

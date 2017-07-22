@@ -1,0 +1,10 @@
+version: '3'
+services:
+  webscale-web:
+    build:
+      context: ../
+      dockerfile: ./webscale-web/Dockerfile
+    volumes:
+     - ./src:/app/@webscale/web/src:ro
+     - ./dist:/app/@webscale/web/dist
+     - ../webscale-logging/dist:/app/@webscale/web/node_modules/@webscale/logging:ro

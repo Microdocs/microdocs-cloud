@@ -1,0 +1,12 @@
+version: '3'
+services:
+  webscale-auditlog:
+    build:
+      context: ../
+      dockerfile: ./webscale-auditlog/Dockerfile
+    volumes:
+     - ./src:/app/@webscale/auditlog/src:ro
+     - ./dist:/app/@webscale/auditlog/dist
+     - ../webscale-logging/dist:/app/@webscale/auditlog/node_modules/@webscale/logging:ro
+     - ../webscale-boot/dist:/app/@webscale/auditlog/node_modules/@webscale/boot:ro
+     - ../webscale-events/dist:/app/@webscale/auditlog/node_modules/@webscale/events:ro

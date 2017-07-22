@@ -5,10 +5,10 @@ services:
       context: ../../
       dockerfile: ./examples/order-service/Dockerfile
     volumes:
-     - ../../microdocs-cloud-rest-client/dist:/app/@microdocs/order-service/node_modules/@microdocs/cloud-rest-client:ro
-     - ../../microdocs-cloud-rest-client-node/dist:/app/@microdocs/order-service/node_modules/@microdocs/cloud-rest-client-node:ro
-     - ./src:/app/@microdocs/order-service/src:ro
-     - ./dist:/app/@microdocs/order-service/dist
+     - ../../webscale-rest-client/dist:/app/@webscale/order-service/node_modules/@webscale/rest-client:ro
+     - ../../webscale-rest-client-node/dist:/app/@webscale/order-service/node_modules/@webscale/rest-client-node:ro
+     - ./src:/app/@webscale/order-service/src:ro
+     - ./dist:/app/@webscale/order-service/dist
     ports:
      - 3000:3000
      - 5858:5858

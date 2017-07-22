@@ -1,0 +1,10 @@
+version: '3'
+services:
+  webscale-rest-client-angular2:
+    build:
+      context: ../
+      dockerfile: ./webscale-rest-client-angular2/Dockerfile
+    volumes:
+     - ./src:/app/@webscale/rest-client-angular2/src:ro
+     - ./dist:/app/@webscale/webscalerest-client-angular2/dist
+     - ../webscale-rest-client/dist:/app/@webscale/rest-client-angular2/node_modules/@webscale/rest-client

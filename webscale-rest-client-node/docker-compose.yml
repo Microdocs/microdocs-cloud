@@ -1,0 +1,10 @@
+version: '3'
+services:
+  webscale-rest-client-node:
+    build:
+      context: ../
+      dockerfile: ./webscale-rest-client-node/Dockerfile
+    volumes:
+     - ./src:/app/@webscale/rest-client-node/src:ro
+     - ./dist:/app/@webscale/rest-client-node/dist
+     - ../webscale-rest-client/dist:/app/@webscale/rest-client-node/node_modules/@webscale/rest-client

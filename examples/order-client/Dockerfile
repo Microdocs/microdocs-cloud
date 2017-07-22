@@ -1,10 +1,10 @@
 FROM node:6
 
-WORKDIR /app/@microdocs/order-client
+WORKDIR /app/@webscale/order-client
 
 # Install dependencies
-ADD ./microdocs-cloud-rest-client/package.json ./node_modules/@microdocs/cloud-rest-client/
-ADD ./microdocs-cloud-rest-client-angular2/package.json ./node_modules/@microdocs/cloud-rest-client-angular2/
+ADD ./webscale-rest-client/package.json ./node_modules/@webscale/rest-client/
+ADD ./webscale-rest-client-angular2/package.json ./node_modules/@webscale/rest-client-angular2/
 ADD ./examples/order-client/package.json ./
 RUN npm install
 

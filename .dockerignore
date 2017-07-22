@@ -1,21 +1,45 @@
 *
 # cloud-rest-client
-!microdocs-cloud-rest-client/gulpfile.js
-!microdocs-cloud-rest-client/package.json
-!microdocs-cloud-rest-client/tsconfig.json
-!microdocs-cloud-rest-client/dist/package.json
+!webscale-rest-client/gulpfile.js
+!webscale-rest-client/package.json
+!webscale-rest-client/tsconfig.json
+!webscale-rest-client/dist/package.json
 
 # cloud-rest-client-node
-!microdocs-cloud-rest-client-node/gulpfile.js
-!microdocs-cloud-rest-client-node/package.json
-!microdocs-cloud-rest-client-node/tsconfig.json
-!microdocs-cloud-rest-client-node/dist/package.json
+!webscale-rest-client-node/gulpfile.js
+!webscale-rest-client-node/package.json
+!webscale-rest-client-node/tsconfig.json
+!webscale-rest-client-node/dist/package.json
 
 # cloud-rest-client-angular2
-!microdocs-cloud-rest-client-angular2/gulpfile.js
-!microdocs-cloud-rest-client-angular2/package.json
-!microdocs-cloud-rest-client-angular2/tsconfig.json
-!microdocs-cloud-rest-client-angular2/dist/package.json
+!webscale-rest-client-angular2/gulpfile.js
+!webscale-rest-client-angular2/package.json
+!webscale-rest-client-angular2/tsconfig.json
+!webscale-rest-client-angular2/dist/package.json
+
+# cloud-logging
+!webscale-logging/gulpfile.js
+!webscale-logging/package.json
+!webscale-logging/tsconfig.json
+!webscale-logging/dist/package.json
+
+# cloud-boot
+!webscale-boot/gulpfile.js
+!webscale-boot/package.json
+!webscale-boot/tsconfig.json
+!webscale-boot/dist/package.json
+
+# cloud-events
+!webscale-events/gulpfile.js
+!webscale-events/package.json
+!webscale-events/tsconfig.json
+!webscale-events/dist/package.json
+
+# cloud-auditlog
+!webscale-auditlog/gulpfile.js
+!webscale-auditlog/package.json
+!webscale-auditlog/tsconfig.json
+!webscale-auditlog/dist/package.json
 
 # Example order-service
 !examples/order-service/gulpfile.js
