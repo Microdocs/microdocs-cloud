@@ -1,4 +1,5 @@
 import { Observable } from "rxjs/Observable";
+import { LoggerFactory, Logger, LogLevel } from "@webscale/logging";
 
 import { RequestInterceptor } from './request-interceptor';
 import { ResponseInterceptor } from './response-interceptor';
@@ -16,6 +17,8 @@ import { Loadbalancer } from "../loadbalancer/loadbalancer";
 import { ServerList } from "../loadbalancer/server-list";
 import { LoadbalancerRule } from "../loadbalancer/rules/loadbalancer-rule";
 import { LoadbalancerFilter } from "../loadbalancer/filters/loadbalancer-filter";
+
+const logger:Logger = LoggerFactory.create("webscale.rest-client");
 
 /**
  * Build and execute a HTTP request
@@ -267,18 +270,11 @@ export class RequestBuilder {
 
     // Resolve request body
     if ( request.body !== undefined && request.body !== null ) {
-      let rawBody     = this.serializeBodyParameter( request.body );
-      request.rawBody = rawBody;
+      request.body     = this.serializeBodyParameter( request.body );
     }
 
     // Resolve headers
-    if ( !request.rawHeaders ) {
-      request.rawHeaders = {};
-    }
-    request.headers.forEach( param => {
-      let header                        = this.serializeHeaderParameter( param );
-      request.rawHeaders[ header.name ] = header.value;
-    } );
+    request.headers = request.headers.map( param => this.serializeHeaderParameter( param ) );
 
     // Set retries
     request.attempts = 0;
@@ -320,43 +316,110 @@ export class RequestBuilder {
         request.serviceId = this._serviceId;
       }
       if ( request.serviceId ) {
-        if ( this._configuration.serverList ) {
+        if (this._configuration.serverList) {
           // Create loadbalancer
-          let serverList          = this._configuration.serverList;
-          let loadbalancerRule    = this._configuration.loadbalancerRule;
+          let serverList = this._configuration.serverList;
+          let loadbalancerRule = this._configuration.loadbalancerRule;
           let loadbalancerFilters = this._configuration.loadbalancerFilters;
-          let loadbalancer        = new Loadbalancer( request.serviceId, serverList, loadbalancerRule, loadbalancerFilters );
+          let loadbalancer = new Loadbalancer(request.serviceId, serverList, loadbalancerRule, loadbalancerFilters);
 
           // Find server
-          let server = loadbalancer.findNextServer( request );
-          if ( !server ) {
-            throw new HttpRequestException( "No available servers found for " + request.serviceId );
+          let server = loadbalancer.findNextServer(request);
+          if (!server) {
+            throw new HttpRequestException("No available servers found for " + request.serviceId);
           } else {
-            console.info( "Use server " + server.instanceName + " [" + server.host + ":" + server.port + "]" );
+            console.info("Use server " + server.instanceName + " [" + server.host + ":" + server.port + "]");
           }
 
           request.host = server.host + ':' + server.port;
         }
       }
 
+      // Log request
+      this.logRequest(request);
+
       // Execute HTTP request
       request.attempts++;
       let response = this._configuration.httpClient.request( request, this._configuration );
 
       response.subscribe( response => {
+        // Log response
+        this.logResponse(response);
+
+        // Return success
         observer.next( response );
         observer.complete();
       }, error => {
         if ( request.attempts >= request.retries ) {
+          // Log error
+          if(logger.shouldLog(LogLevel.debug)){
+            logger.debug(error.message + " - retries (" + request.attempts + "/" + request.retries + ")", error);
+            if(error.response){
+              this.logResponse(error.response);
+            }
+          }
+
           // Done retrying
           observer.error( error );
           observer.complete();
         } else {
+          // Log error
+          if(logger.shouldLog(LogLevel.debug)){
+            logger.debug(error.message + " - retries (" + request.attempts + "/" + request.retries + ")", error);
+            if(error.response){
+              this.logResponse(error.response);
+            }
+          }
+
           // retry
           this.makeRequest( request ).subscribe( observer );
         }
       } );
     }) );
+  }
+
+  /**
+   * Log Request
+   * @param {Request} request
+   */
+  private logRequest(request: Request){
+    if(logger.shouldLog(LogLevel.verbose)) {
+      logger.verbose( "request > " + request.method + " " + request.url);
+      if (logger.shouldLog(LogLevel.silly)) {
+        request.headers.forEach(header => {
+          logger.debug("header > " + header.name + ": " + header.value);
+        });
+        if (request.body) {
+          if (typeof(request.body) === 'string') {
+            logger.debug("body > " + request.body);
+          } else {
+            logger.debug("body > " + JSON.stringify(request.body));
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Log Response
+   * @param {Response} response
+   */
+  private logResponse(response: Response){
+    if(logger.shouldLog(LogLevel.verbose)) {
+      logger.verbose( "response > " + request.response.method + " " + request.response.url);
+      if (logger.shouldLog(LogLevel.silly)) {
+        response.headers.forEach(header => {
+          logger.debug("header > " + header.name + ": " + header.value);
+        });
+        if (response.body) {
+          if (typeof(response.body) === 'string') {
+            logger.debug("body > " + response.body);
+          } else {
+            logger.debug("body > " + JSON.stringify(response.body));
+          }
+        }
+      }
+    }
   }
 
   private serializePathParameter( parameter: Parameter ): { name: string, value: string } {

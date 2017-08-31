@@ -7,6 +7,6 @@ ADD ./webscale-auditlog/package.json ./
 RUN npm install
 
 # Add code
-ADD ./webscale-auditlog/gulpfile.js ./webscale-auditlog/tsconfig.json ./
+ADD ./webscale-auditlog/gulpfile.js ./webscale-auditlog/gulpfile.ts ./webscale-auditlog/tsconfig.json ./
 
-CMD rm -rf ./dist/* && ./node_modules/.bin/gulp watch
+CMD ./node_modules/.bin/gulp watch

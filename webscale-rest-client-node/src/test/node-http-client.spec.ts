@@ -1,115 +1,155 @@
-import { assert } from 'chai';
-import { Observable } from "rxjs";
-import { Request as ExpressRequest, Response as ExpressResponse } from 'express';
-import { Request, RequestMethod } from '@webscale/rest-client';
+import {assert} from 'chai';
+import {Request as ExpressRequest, Response as ExpressResponse} from 'express';
+import {Request, RequestMethod, ParameterList, HttpServerException} from '@webscale/rest-client';
 
-import { MockServer } from './mock-server.spec';
-import { NodeHttpClient } from "../http/node-http-client";
+import {MockServer} from './mock-server.spec';
+import {NodeHttpClient} from "../http/node-http-client";
 
-const SERVER_PORT = 45958;
+describe('NodeHttpClient', () => {
 
-describe( 'NodeHttpClient', () => {
-
-  it( "HTTP Get", ( done: any ) => {
+  it("HTTP Get", (done: any) => {
     // Arrange
     let server = new MockServer();
-    server.app.get( "/home", ( req: ExpressRequest, res: ExpressResponse ) => {
-      res.sendStatus( 200 );
-    } );
-    server.open( SERVER_PORT );
+    server.app.get("/home", (req: ExpressRequest, res: ExpressResponse) => {
+      res.sendStatus(200);
+    });
+    let port = server.open();
 
-    let request = new Request( {
+    let request = new Request({
       method: RequestMethod.Get,
-      host: 'localhost:' + SERVER_PORT,
+      host: 'localhost:' + port,
       path: '/home',
       timeout: 200
-    } );
-    let client  = new NodeHttpClient();
+    });
+    let client = new NodeHttpClient();
 
     // Act
-    client.request( request, null ).subscribe( response => {
+    client.request(request, null).subscribe(response => {
       try {
-        assert.equal( response.status, 200 );
+        assert.equal(response.status, 200);
         done();
-      } catch ( e ) {
-        done( e );
+      } catch (e) {
+        done(e);
       } finally {
         server.close();
       }
     }, error => {
-      done( error );
+      done(error);
       server.close();
-    } );
-  } );
+    });
+  });
 
-  it( "HTTP Get response", ( done: any ) => {
+  it("HTTP Get response", (done: any) => {
     // Arrange
     let server = new MockServer();
-    server.app.get( "/home", ( req: ExpressRequest, res: ExpressResponse ) => {
-      res.sendStatus( 200 );
-      res.json( {
+    server.app.get("/home", (req: ExpressRequest, res: ExpressResponse) => {
+      res.status(200);
+      res.json({
         hello: true
-      } );
-    } );
-    server.open( SERVER_PORT );
+      });
+    });
+    let port = server.open();
 
-    let request = new Request( {
+    let request = new Request({
       method: RequestMethod.Get,
-      host: 'localhost:' + SERVER_PORT,
+      host: 'localhost:' + port,
       path: '/home',
       timeout: 200
-    } );
-    let client  = new NodeHttpClient();
+    });
+    let client = new NodeHttpClient();
 
     // Act
-    client.request( request, null ).subscribe( response => {
+    client.request(request, null).subscribe(response => {
       try {
-        assert.equal( response.status, 200 );
+        assert.equal(response.status, 200);
         done();
-      } catch ( e ) {
-        done( e );
+      } catch (e) {
+        done(e);
       } finally {
         server.close();
       }
     }, error => {
-      done( error );
+      done(error);
       server.close();
-    } );
-  } );
+    });
+  });
 
-  it( "HTTP Post", ( done: any ) => {
+  it("HTTP Post", (done: any) => {
     // Arrange
     let server = new MockServer();
-    server.app.post( "/home", ( req: ExpressRequest, res: ExpressResponse ) => {
-      res.sendStatus( 201 );
-      res.json( req.body );
-    } );
-    server.open( SERVER_PORT );
+    server.app.post("/home", (req: ExpressRequest, res: ExpressResponse) => {
+      res.status(201);
+      res.json(req.body);
+    });
+    let port = server.open();
 
-    let request = new Request( {
+    let request = new Request({
       method: RequestMethod.Post,
-      host: 'localhost:' + SERVER_PORT,
+      host: 'localhost:' + port,
       path: '/home',
       timeout: 200,
-      body: { hello: true }
-    } );
-    let client  = new NodeHttpClient();
+      body: JSON.stringify({hello: true}),
+      headers: new ParameterList({
+        'content-type': 'application/json'
+      })
+    });
+    let client = new NodeHttpClient();
 
     // Act
-    client.request( request, null ).subscribe( response => {
+    client.request(request, null).subscribe(response => {
       try {
-        assert.equal( response.status, 201 );
-        assert.deepEqual( response.body, { hello: true } );
+        assert.equal(response.status, 201);
+        assert.deepEqual(response.body, {hello: true});
         done();
-      } catch ( e ) {
-        done( e );
+      } catch (e) {
+        done(e);
       } finally {
         server.close();
       }
     }, error => {
-      done( error );
+      done(error);
       server.close();
-    } );
-  } );
+    });
+  });
 
-} );
+  it("Error on 500 response", (done: any) => {
+    // Arrange
+    let server = new MockServer();
+    server.app.post("/home", (req: ExpressRequest, res: ExpressResponse) => {
+      res.status(500);
+      res.json({error: "something went wrong"});
+    });
+    let port = server.open();
+
+    let request = new Request({
+      method: RequestMethod.Post,
+      host: 'localhost:' + port,
+      path: '/home',
+      timeout: 200,
+      body: JSON.stringify({hello: true}),
+      headers: new ParameterList({
+        'content-type': 'application/json'
+      })
+    });
+    let client = new NodeHttpClient();
+
+    // Act
+    client.request(request, null).subscribe(response => {
+      try {
+        assert.fail();
+      } catch (e) {
+        done(e);
+      }
+    }, error => {
+      try {
+        assert.equal(error.name, "HttpServerException");
+        assert.equal(error.status, 500);
+        assert.deepEqual(error.body, {error: "something went wrong"});
+        done();
+      } catch (e) {
+        done(e);
+      }
+    });
+  })
+
+});

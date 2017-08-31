@@ -15,6 +15,16 @@ export class ParameterList {
   private parameters: Parameter[] = [];
 
   /**
+   * Initialize Parameter list
+   * @param params map of initial parameters
+   */
+  constructor(params?:Object){
+    for(let key in params){
+      this.append(new Parameter({name: key, value: params[key]}));
+    }
+  }
+
+  /**
    * Append parameter.
    * If a parameter already existed with the same name, it will be converted to an array
    *

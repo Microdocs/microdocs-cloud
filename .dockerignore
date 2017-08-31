@@ -36,6 +36,7 @@
 !webscale-events/dist/package.json
 
 # cloud-auditlog
+!webscale-auditlog/gulpfile.ts
 !webscale-auditlog/gulpfile.js
 !webscale-auditlog/package.json
 !webscale-auditlog/tsconfig.json

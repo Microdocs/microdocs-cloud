@@ -1,9 +1,9 @@
-# MicroDocs Cloud REST Client
+# Webscale REST Client
 
-MicroDocs Cloud REST Client is a lightweight universal framework for to make REST clients. 
+Webscale REST Client is a lightweight universal framework for to make REST clients. 
 The purpose behind this project is to make a **Resilient System** for NodeJS and Web applications.
 Everything is build with an abstraction layer, so you can plugin your own implementation to customize it.
-This framework is part of the [MicroDocs Cloud Framework](https://github.com/Microdocs/microdocs-cloud).
+This framework is part of the [WebscaleJS Framework](https://github.com/Webscale-Architecture/WebscaleJS).
 
 ## Features
 * [Declarative Typescript REST client with decorators](#declarative-typescript-rest-client)
@@ -16,7 +16,7 @@ This framework is part of the [MicroDocs Cloud Framework](https://github.com/Mic
 
 ## Installation
 ```sh
-npm install --save @microdocs/cloud-rest-client
+npm install --save @webscale/rest-client
 ```
 
 ## <a name="declarative-typescript-rest-client"></a>Declarative Typescript REST client with decorators
@@ -24,7 +24,7 @@ This library enables to write REST clients in a declarative way with Typescript.
 ### Example
 ```ts
 
-import {HttpClient, RESTClient, Client, GET, PUT, POST, DELETE, Headers, Path, Body, Query, Produces, MediaType} from '@microdocs/cloud-rest-client';
+import {HttpClient, RESTClient, Client, GET, PUT, POST, DELETE, Headers, Path, Body, Query, Produces, MediaType} from '@webscale/rest-client';
 import {Todo} from './models/Todo';
 import {SessionFactory} from './sessionFactory';
 
@@ -104,8 +104,78 @@ With this mechanise a resilient system is created, where a fault is prevented to
 
 With an abstraction layer for the HTTP clients, it is possible to use a custom implementation for it.
 There are also implementation that are ready to use:
-* [NodeJS](https://github.com/Microdocs/microdocs-cloud/tree/master/microdocs-cloud-rest-client-node)
-* [Angular 2](https://github.com/Microdocs/microdocs-cloud/tree/master/microdocs-cloud-rest-client-angular2)
+* [NodeJS](https://github.com/Webscale-Architecture/WebscaleJS/tree/master/webscale-rest-client-node)
+* [Angular 2](https://github.com/Webscale-Architecture/WebscaleJS/tree/master/webscale-rest-client-angular2)
+
+# API Docs
+
+### `RestClient`
+
+Declarative REST Client
+
+#### Constructors:
+- `constructor(httpClient?: HttpClient)` - Initialize a RestClient with a `HttpClient` implementation (see [Abstract Http clients](#abstract-http-client))
+
+#### Methods:
+- `getServiceId(): string` - returns the serviceId of the RestClient
+- `getBaseUrl(): string` - returns the base url of RestClient
+- `getDefaultHeaders(): Object` - returns the default headers of RestClient in a key-value pair
+- `getConfiguration(): Configuration` - returns the `Configuration` object specified in the `@Client` decorator above the class
+- `getHttpClient(): HttpClient` - returns the `HttpClient` that is used to make requests
+- `getRequestBuilder(): RequestBuilder` - returns the `RequestBuilder` instance that is used to build up the requests
+
+### `Configuration`
+
+Configuration options for the RestBuilder
+
+#### Properties
+
+- `httpClient?: HttpClient` - Used to make the Http request
+- `retries?: number` - How many times a Http request should be retried before failing.
+- `timeout?: number` - Read and connection timeout for the Http request
+
+- `requestInterceptors?: RequestInterceptor[]` - Interceptor which is called just before making the Http request
+- `responseInterceptors?: ResponseInterceptor[]` - Interceptor which is called just after the Http call is made
+
+- `bodyObjectMapper?: ObjectMapper` - Http Body serializer and deserializer
+- `queryObjectMapper?: ParameterObjectMapper` - Http query parameters serializer and deserializer
+- `pathObjectMapper?: ParameterObjectMapper` - Http path parameters serializer and deserializer
+- `headerObjectMapper?: ParameterObjectMapper` - Http header parameters serializer and deserializer
+
+- `serverList?: new ( serviceName: string ) => ServerList` - List of available servers which are used for loadbalancing
+- `loadbalancerRule?: LoadbalancerRule` - Loadbalancer algorithm, default is the `RoundRibbonRule`
+- `loadbalancerFilters?: LoadbalancerFilter[]` - Filter the `ServerList` just before the are passed to the `LoadbalancerRule`
+
+### Class decorators:
+- `@Client(args:{serviceId?: string, baseUrl?: string, headers?: any, configuration?: Configuration|(new () => Configuration)})`
+
+### Method decorators:
+- `@Get(url: String)`
+- `@Post(url: String)`
+- `@Put(url: String)`
+- `@Patch(url: String)`
+- `@Delete(url: String)`
+- `@Head(url: String)`
+- `@Headers(headers: Object)`
+- `@Map(mapper:(resp : any)=>any)`
+- `@OnEmit(emitter:(resp : Observable<any>)=>Observable<any>)`
+- `@Retry(retries: number)`
+
+### Parameter decorators:
+- `@Path(name: string, value?:any|{value?:any})`
+- `@Query(name: string, value?:any|{value?:any,format?:string})`
+- `@Header(name: string, value?:any|{value?:any,format?:string})`
+- `@Body`
+
+#### Collection Format
+Determines the format of the array if type array is used. (used for ``@Query`` and ``@Header``) Possible values are:
+* ``Format.CSV`` - comma separated values ``foo,bar``.
+* ``Format.SSV`` - space separated values ``foo bar``.
+* ``Format.TSV`` - tab separated values ``foo\tbar``.
+* ``Format.PIPES`` - pipe separated values ``foo|bar``.
+* ``Format.MULTI`` - corresponds to multiple parameter instances instead of multiple values for a single instance ``foo=bar&foo=baz``. This is valid only for parameters in "query" or "formData".
+
+Default value is ``Format.CSV``.
 
 ## Licence
 

@@ -11,7 +11,7 @@ import { Parameter, Format } from '../http/parameter';
  */
 export class UrlEncodingObjectMapper implements ParameterObjectMapper {
 
-  public serializeParameter(parameter: Parameter): { name: string, value: string } {
+  public serializeParameter(parameter: Parameter): Parameter {
     let format = parameter.format || Format.CSV;
     let value = parameter.value;
     if (Array.isArray(value)) {
@@ -39,10 +39,10 @@ export class UrlEncodingObjectMapper implements ParameterObjectMapper {
       value = encodeURIComponent(value);
     }
     let name: string = encodeURIComponent(parameter.name);
-    return { name: name, value: value };
+    return new Parameter({ name: name, value: value });
   }
 
-  deserializeParameter(param: { name: string, value: string }): Parameter {
+  deserializeParameter(param: { name: string, value: string }|Parameter): Parameter {
     let value: string = decodeURIComponent(param.value);
     let name: string = decodeURIComponent(param.name);
     return new Parameter({ name: name, value: value });

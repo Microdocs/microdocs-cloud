@@ -19,6 +19,10 @@ export class RestClient implements RequestInterceptor, ResponseInterceptor {
   private requestBuilder: RequestBuilder;
   private httpClient: HttpClient;
 
+  /**
+   * Initialize RestClient
+   * @param {HttpClient} httpClient HttpClient implementation
+   */
   public constructor( httpClient?: HttpClient ) {
     this.httpClient     = httpClient;
     // init request builder

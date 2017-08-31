@@ -30,7 +30,10 @@ export {
 export {
   HttpRequestException,
   HttpConfigurationException,
-  HttpResponseException
+  HttpResponseException,
+  HttpException,
+  HttpServerException,
+  HttpClientException
 } from './exception'
 
 export {

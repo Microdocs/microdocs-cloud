@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mWebsclaeJS/WebscaleJS.git"
+    "url": "git+https://github.com/Webscale-Architecture/WebscaleJS.git"
   },
   "keywords": [
     "webscale",
@@ -23,9 +23,9 @@
   "author": "Steven Hermans <s.hermans@maxxton.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/WebsclaeJS/WebscaleJS/issues"
+    "url": "https://github.com/Webscale-Architecture/WebscaleJS/issues"
   },
-  "homepage": "https://github.com/WebsclaeJS/WebscaleJS#readme",
+  "homepage": "https://github.com/Webscale-Architecture/WebscaleJS#readme",
   "dependencies": {
     "rxjs": "^5.4.1"
   },

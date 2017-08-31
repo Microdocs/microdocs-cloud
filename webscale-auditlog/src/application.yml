@@ -4,3 +4,12 @@ application:
 
 logger:
   level: verbose
+
+mongodb:
+  url: mongodb://mongodb/auditlog
+
+amqp:
+  url: amqp://rabbitmq
+  exchange: mybus
+  queue: audit-log
+  routingKey: #
