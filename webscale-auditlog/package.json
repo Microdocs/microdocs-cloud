@@ -27,26 +27,30 @@
   },
   "homepage": "https://github.com/WebsclaeJS/WebscaleJS#readme",
   "dependencies": {
+    "amqp-ts": "^1.4.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "js-yaml": "^3.9.1",
+    "mongoose": "^4.11.4",
+    "reflect-metadata": "^0.1.10",
+    "routing-controllers": "^0.7.1",
     "rxjs": "^5.4.1",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.16.4",
     "@types/chai": "^4.0.1",
+    "@types/express": "^4.0.36",
     "@types/jasmine": "^2.5.53",
     "@types/uuid": "^3.0.0",
-    "async": "^2.5.0",
     "chai": "^4.0.2",
     "del": "^3.0.0",
-    "gaze": "^1.1.2",
     "gulp": "^3.9.1",
-    "gulp-html-extend": "^1.1.6",
     "gulp-mocha": "^4.3.1",
-    "gulp-replace": "^0.6.1",
+    "gulp-nodemon": "^2.2.1",
     "gulp-typescript": "^3.1.7",
-    "gulp-util": "^3.0.8",
-    "jec-juta": "^1.0.3",
+    "gulpclass": "^0.1.2",
     "merge2": "^1.0.3",
-    "typescript": "^2.4.1",
-    "vinyl-paths": "^2.1.0"
+    "typescript": "^2.4.2"
   }
 }

@@ -18,11 +18,9 @@ export class Request {
   serviceId: string;
   timeout: number;
   body: any;
-  rawBody: string;
   queryParameters: ParameterList = new ParameterList();
   pathParameters: ParameterList  = new ParameterList();
   headers: ParameterList         = new ParameterList();
-  rawHeaders: { [name: string]: string };
 
   retries: number;
   attempts: number;

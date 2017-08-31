@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../routing-controllers/routing-controllers.iml" filepath="$PROJECT_DIR$/../routing-controllers/routing-controllers.iml" />
       <module fileurl="file://$PROJECT_DIR$/webscale.iml" filepath="$PROJECT_DIR$/webscale.iml" />
       <module fileurl="file://$PROJECT_DIR$/webscale-auditlog/webscale-auditlog.iml" filepath="$PROJECT_DIR$/webscale-auditlog/webscale-auditlog.iml" />
       <module fileurl="file://$PROJECT_DIR$/webscale-boot/webscale-boot.iml" filepath="$PROJECT_DIR$/webscale-boot/webscale-boot.iml" />

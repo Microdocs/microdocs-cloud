@@ -9,8 +9,8 @@ import { Parameter } from '../http/parameter';
  */
 export interface ParameterObjectMapper {
 
-  serializeParameter(value: Parameter): { name: string, value: string };
+  serializeParameter(value: Parameter): Parameter;
 
-  deserializeParameter(string: { name: string, value: string }): Parameter;
+  deserializeParameter(string: { name: string, value: string }|Parameter): Parameter;
 
 }

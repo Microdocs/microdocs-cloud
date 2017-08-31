@@ -1,6 +1,6 @@
 # WebscaleJS REST Client NodeJS
 
-**NodeJS Http** implementation for [Webscale REST Client](https://github.com/WebscaleJS/webscale/tree/master/webscale-rest-client)
+**NodeJS Http** implementation for [Webscale REST Client](https://github.com/Webscale-Architecture/WebscaleJS/tree/master/webscale-rest-client)
 
 ## Installation
 ```
@@ -11,7 +11,7 @@ npm install --save @webscale/rest-client-node
 
 You can provide the `NodeRestClient` in two ways.
 
-### 1. Provide in the constructor of the RestClient
+### 1. Provide the `NodeRestClient` in the constructor of the RestClient
 
 ```ts
 
@@ -30,7 +30,7 @@ export class TodoClient extends RestClient {
 ...  
 ```
 
-### 2. Provide in the configuration class
+### 2. Provide the `NodeRestClient` in the configuration class
 
 ```ts
 

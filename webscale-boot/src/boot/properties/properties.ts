@@ -17,12 +17,12 @@ export class Properties extends PropertySource {
 
   public getProperty<T extends any>( key: string, defaultValue?: T ): T {
     for ( let i = 0; i < this._sources.length; i++ ) {
-      let value = this._sources[ i ].getProperty( key, defaultValue );
+      let value = this._sources[ i ].getProperty<T>( key );
       if ( value !== null ) {
         return value;
       }
     }
-    return null;
+    return defaultValue || null;
   }
 
   public load( propertySource: PropertySource ) {

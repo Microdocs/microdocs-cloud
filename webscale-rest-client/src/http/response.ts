@@ -1,6 +1,5 @@
 
 import {Request} from './request';
-import {JsonObjectMapper} from '../object-mapper/json-object-mapper';
 import { ParameterList } from "./parameter-list";
 
 /**
@@ -13,7 +12,6 @@ export class Response {
 
   status: number;
   request: Request;
-  rawBody:string;
   body:any;
   headers:ParameterList = new ParameterList();
 
@@ -21,16 +19,18 @@ export class Response {
     if(options){
       this.request = options.request;
       this.status = options.status;
-      this.rawBody = options.rawBody;
       this.body = options.body;
     }
   }
 
   public json():any{
-    if(this.rawBody === undefined || this.rawBody === null){
+    if(this.body === undefined || this.body === null){
       throw new Error("No body available")
     }
-    return new JsonObjectMapper().deserializeValue(this.rawBody);
+    if(typeof(this.body) === 'string'){
+      return JSON.parse(this.body);
+    }
+    return this.body;
   }
 
 }
@@ -39,7 +39,6 @@ export interface ResponseOptions {
 
   request?:Request;
   status?:number;
-  rawBody?:string;
   body?:any;
 
 }

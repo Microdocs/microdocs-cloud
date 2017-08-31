@@ -99,7 +99,7 @@ export abstract class Logger {
    * @param logLevel
    * @return {boolean}
    */
-  protected shouldLog( logLevel: LogLevel ): boolean {
+  public shouldLog( logLevel: LogLevel ): boolean {
     return this.getLevel() <= logLevel;
   }
 

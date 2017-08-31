@@ -1,9 +1,15 @@
 version: '3'
 services:
+  mongodb:
+    image: mongo
+  eventbus:
+    image: rabbitmq
   webscale-auditlog:
     build:
       context: ../
       dockerfile: ./webscale-auditlog/Dockerfile
+    ports:
+     - 3000:3000
     volumes:
      - ./src:/app/@webscale/auditlog/src:ro
      - ./dist:/app/@webscale/auditlog/dist

@@ -27,13 +27,14 @@
   },
   "homepage": "https://github.com/WebsclaeJS/WebscaleJS#readme",
   "dependencies": {
-    "js-yaml": "^3.9.0"
+    "js-yaml": "^3.9.0",
+    "typedi": "^0.5.2"
   },
   "devDependencies": {
     "@types/chai": "^4.0.1",
     "@types/jasmine": "^2.5.53",
     "@types/js-yaml": "^3.5.31",
-    "@types/node": "^8.0.9",
+    "@types/node": "^8.0.19",
     "async": "^2.5.0",
     "chai": "^4.0.2",
     "del": "^3.0.0",
