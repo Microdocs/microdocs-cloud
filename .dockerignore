@@ -1,4 +1,8 @@
 *
+!webscale-core/package.json
+!*/tsconfig.json
+
+
 # cloud-rest-client
 !webscale-rest-client/gulpfile.js
 !webscale-rest-client/package.json

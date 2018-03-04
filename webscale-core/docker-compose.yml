@@ -1,0 +1,9 @@
+version: '3'
+services:
+  webscale-core:
+    build:
+      context: ../
+      dockerfile: ./webscale-core/Dockerfile
+    volumes:
+     - ./src:/app/@webscale/core/src:ro
+     - ./dist:/app/@webscale/core/dist
